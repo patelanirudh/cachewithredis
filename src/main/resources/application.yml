@@ -1,0 +1,31 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: "foo"
+  cache:
+    type: CAFFEINE
+
+redis:
+  host: localhost
+  port: 6379
+  password: "Avaya@123!"
+
+mockData: false
+useCacheRepo: true
+cache:
+  initialCap: 300
+  maxSize: 900
+
+# Asynchronous write ThreadPool Configuration
+async:
+  core:
+    write-pool-size: 64
+    read-pool-size: 64
+  max:
+    write-pool-size: 128
+    read-pool-size: 128
+  pool:
+    queue:
+      capacity: 256

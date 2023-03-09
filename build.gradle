@@ -1,0 +1,58 @@
+import com.google.cloud.tools.jib.api.buildplan.ImageFormat
+
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.6'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id 'com.google.cloud.tools.jib' version '3.3.1'
+}
+
+group = 'com.ingress'
+version = '1.0'
+sourceCompatibility = '17'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+jib {
+	from {
+		image = 'azul/zulu-openjdk:11'
+	}
+//	to {
+//		image = 'ocr-docker-hosted.forge.avaya.com/cosmos-poc'
+//		tags = ['$version']
+//	}
+	container {
+		mainClass = 'com.ingress.poc.FooApplication'
+		ports = ['9080', '9001']
+		creationTime = Instant.now().toString()
+		format = ImageFormat.OCI
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'org.springframework.boot:spring-boot-starter-cache'
+	implementation 'com.github.ben-manes.caffeine:caffeine'
+	implementation 'org.apache.commons:commons-csv:1.5'
+	implementation 'com.google.guava:guava:11.0.2'
+	implementation 'commons-io:commons-io:2.6'
+	implementation 'commons-validator:commons-validator:1.7'
+	compileOnly 'org.projectlombok:lombok:1.18.24'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
