@@ -53,7 +53,10 @@ public class RawKVService {
 //        });
 //        return CompletableFuture.completedFuture(savedRawKVData);
 
-        return CompletableFuture.completedFuture(rawKVRepo.save(rawKVData));
+        RawKVData savedRawKVData = rawKVRepo.save(rawKVData);
+        caffeineCache.putIfAbsent(rawKVData.getId(), savedRawKVData);
+
+        return CompletableFuture.completedFuture(savedRawKVData);
     }
 
     @Async("asyncReadTaskPool")

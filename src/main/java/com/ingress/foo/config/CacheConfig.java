@@ -25,6 +25,8 @@ public class CacheConfig {
     @Value("${cache.maxSize}")
     private Integer maxSize;
 
+    @Value("${cache.expireAfterAccessInSeconds}")
+    private Integer expireAfterAccessInSeconds;
 
     @Bean
     public CacheManager cacheManager() {
@@ -41,13 +43,13 @@ public class CacheConfig {
             return Caffeine.newBuilder()
                     .initialCapacity(initialCap)
                     .maximumSize(maxSize)
-                    .expireAfterAccess(10, TimeUnit.MINUTES)
+                    .expireAfterAccess(expireAfterAccessInSeconds, TimeUnit.SECONDS)
                     .recordStats();
         } else {
             return Caffeine.newBuilder()
                     .initialCapacity(1)
                     .maximumSize(1)
-                    .expireAfterAccess(10, TimeUnit.MINUTES)
+                    .expireAfterAccess(1, TimeUnit.MINUTES)
                     .recordStats();
         }
     }

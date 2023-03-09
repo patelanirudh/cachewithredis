@@ -17,15 +17,16 @@ useCacheRepo: true
 cache:
   initialCap: 300
   maxSize: 900
+  expireAfterAccessInSeconds: 30
 
 # Asynchronous write ThreadPool Configuration
 async:
   core:
-    write-pool-size: 64
-    read-pool-size: 64
+    write-pool-size: 512
+    read-pool-size: 512
   max:
-    write-pool-size: 128
-    read-pool-size: 128
+    write-pool-size: 768
+    read-pool-size: 768
   pool:
     queue:
-      capacity: 256
+      capacity: 1024

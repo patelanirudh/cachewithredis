@@ -36,14 +36,14 @@ public class RedisConfiguration {
     @Value("${redis.port}")
     Integer redisPort;
 
-    @Value("${redis.password}")
-    String redisPassword;
+//    @Value("${redis.password}")
+//    String redisPassword;
 
     @Bean("redisStandaloneConfiguration")
     RedisStandaloneConfiguration redisStandaloneConfiguration() {
         log.info("Redis Details : hostname {}, port {} ", redisHostname, redisPort);
         RedisStandaloneConfiguration redisStConfig = new RedisStandaloneConfiguration(redisHostname, redisPort);
-        redisStConfig.setPassword(redisPassword);
+//        redisStConfig.setPassword(redisPassword);
         return redisStConfig;
     }
 
